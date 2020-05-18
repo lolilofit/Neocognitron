@@ -26,6 +26,16 @@ int DataOperations::init_d(std::vector<std::vector<float>> &d, int layers_num, i
 
     for(int i = 0; i < layers_num; i++) {
         d[i] = decr_f(w_size);
+        /*
+        for(int l = 0; l < w_size; l++) {
+            for(int m = 0; m < w_size; m++) {
+                std::cout << d[i][l*w_size + m] << " ";
+            }
+            std::cout << "\n";
+        }
+        std::cout << "\n";
+        */
+
         for(int j = 0; j < d[i].size(); j++) {
             d[i][j] = d[i][j] * 0.39;
         }
@@ -59,8 +69,8 @@ std::vector<float> DataOperations::decr_f(int size) {
         for(int j = 0; j < size; j++) {
             dx = (float)i - half_x;
             dy = (float)j - half_y;
-            metric = std::sqrt(dx*dx+dy*dy);
-            res[i*size + j] = std::pow(2.0, metric);
+            metric = 1.0f - 0.5f * std::sqrt(dx*dx+dy*dy);
+            res[i*size + j] = 1.0f + metric * std::pow(2.0, - 0.5f * std::sqrt(dx*dx+dy*dy));
         }
     }
 

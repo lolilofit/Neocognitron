@@ -31,8 +31,9 @@ private:
 
     std::vector<std::vector<std::vector<float>>> data;
 
-    Position* find_max(std::vector<std::vector<std::vector<float>>> &data_part, int w_size, int center_shift_x, int center_shift_y);
 public:
+    Position* find_max(std::vector<std::vector<std::vector<float>>> &data_part, int w_size, int center_shift_x, int center_shift_y);
+
     ColumnResult(int plane_size, int planes_number);
     void get_planes_parts(int x, int y, int w_size, std::vector<std::vector<float>> &res);
     std::vector<float> get_plane_part(int plane_number, int x, int y, int w_size);
@@ -49,6 +50,8 @@ public:
 
     int add_new_plane();
 
+    std::vector<std::vector<std::vector<float>>> get_data();
+
     void calkData();
 
     void summ_data();
@@ -56,6 +59,7 @@ public:
     int get_plane_size();
 
     float get_val(int plane_num);
+
 };
 
 

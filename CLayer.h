@@ -18,6 +18,8 @@ private:
 
     std::vector<std::vector<float>> conn_factor;
 
+    std::vector<int> labels;
+
     int planes_number;
     int w_size;
     int plane_size;
@@ -30,6 +32,8 @@ public:
    ColumnResult calk_result(ColumnResult previous_column_result);
 
     void init_c_layer(int new_planes_num, int prev_plane_size);
+
+    void push_label(int labl);
 };
 
 

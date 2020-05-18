@@ -30,7 +30,7 @@ int main() {
 
         for (int i = 0; i < 28; i++) {
             for (int j = 0; j < 28; j++) {
-                if (ar[0][i * 28 + j] != 0)
+                if (ar[2][i * 28 + j] != 0)
                     std::cout << 1;
                 else
                     std::cout << 0;
@@ -42,6 +42,15 @@ int main() {
 
     std::vector<std::vector<float>> train_set;
     imageProcess.readImage(60000, 784, train_set, "C:\\Users\\User\\CLionProjects\\neocognitron\\mnist_data\\train-images.idx3-ubyte");
+
+    for(int k = 0; k < 10000; k++) {
+        for (int i = 0; i < 28; i++) {
+            for (int j = 0; j < 28; j++) {
+                if(train_set[k][i* 28 + j] != 0)
+                    train_set[k][i*28 + j] = 1;
+            }
+        }
+    }
 
     std::vector<int> train_labels;
     imageProcess.read_label(train_labels, "C:\\Users\\User\\CLionProjects\\neocognitron\\mnist_data\\train-labels.idx1-ubyte");

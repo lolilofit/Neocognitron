@@ -46,9 +46,11 @@ public:
 
     ColumnResult calk_with_train(ColumnResult prev_col_result);
 
-    ColumnResult calkAndTrainAgain(ColumnResult prev_col_result, bool flag);
+    ColumnResult calkAndTrainAgain(ColumnResult &prev_col_result);
 
     ColumnResult calkResWithoutAdd(ColumnResult prev_col_result, std::vector<std::vector<float>> &v_cells_result);
+
+    void get_res_per_plane(int plane_number, std::vector<Position*> &res, std::vector<Position*> &res_per_plane);
 };
 
 

@@ -12,18 +12,21 @@ std::vector<float> ColumnResult::get_part_plane(int plane, int x, int y, int w_s
     std::vector<float> res;
     res.resize(w_size*w_size);
 
-    if(w_size == plane_size) {
+    if(w_size >= plane_size) {
         for(int i = 0; i < w_size; i++) {
             for(int j = 0; j < w_size; j++) {
-                res[i*w_size + j] = data[plane][i][j];
+                if(i >= 0 && i < plane_size && j >= 0 && j < plane_size)
+                    res[i*w_size + j] = data[plane][i][j];
+                else
+                    res[i*w_size + j] = 0.0;
             }
         }
     }
     else {
         int cnt = 0;
         int center_shift = (w_size - 1)/2;
-        for(int i = x - center_shift; i < x + center_shift; i++) {
-            for(int j = y - center_shift; j < y + center_shift; j++) {
+        for(int i = x - center_shift; i <= (x + center_shift); i++) {
+            for(int j = y - center_shift; j <= (y + center_shift); j++) {
                 //catch exception
                 if(i >= 0 && i < plane_size && j >= 0 && j < plane_size)
                     //res[i*w_size + j] = data[plane][i][j];
@@ -60,34 +63,38 @@ std::pair<int, int> move_pos(int point_x, int point_y, int l_center_x, int l_cen
 
 //размерности???
 Position* ColumnResult::find_max(std::vector<std::vector<std::vector<float>>> &data_part, int w_size, int center_shift_x, int center_shift_y) {
-    int x_size = data_part[0].size();
-    int y_size = data_part[0][0].size();
-    int max_plane_pos = -1;
-    int max_x_pos = -1;
-    int max_y_pos = -1;
-    float max_val = -1.0;
+    if(!data_part.empty()) {
+        int x_size = data_part[0].size();
+        int y_size = data_part[0][0].size();
+        int max_plane_pos = -1;
+        int max_x_pos = -1;
+        int max_y_pos = -1;
+        float max_val = -1.0;
 
-    for(int plane = 0; plane < plane_number; plane++) {
-        for(int i = 0; i < x_size; i++) {
-            for(int j = 0; j < y_size; j++) {
-                if(data_part[plane][i][j] > max_val) {
-                    max_val = data_part[plane][i][j];
-                    max_plane_pos = plane;
-                    max_x_pos = i;
-                    max_y_pos = j;
+        for (int plane = 0; plane < plane_number; plane++) {
+            for (int i = 0; i < x_size; i++) {
+                for (int j = 0; j < y_size; j++) {
+                    if (data_part[plane][i][j] > max_val) {
+                        max_val = data_part[plane][i][j];
+                        max_plane_pos = plane;
+                        max_x_pos = i;
+                        max_y_pos = j;
+                    }
                 }
             }
         }
-    }
 
-    if(max_val > 0.0) {
-        int local_center = (w_size - w_size%2)/2;
-        std::pair<int, int> moved_pos  = move_pos(max_x_pos, max_y_pos, local_center, local_center, center_shift_x, center_shift_y);
-        Position* position = new Position(max_plane_pos , moved_pos.first, moved_pos.second, max_val);
-        return position;
-    } else {
-        return nullptr;
+        if (max_val > 0.0) {
+            int local_center = (w_size - w_size % 2) / 2;
+            std::pair<int, int> moved_pos = move_pos(max_x_pos, max_y_pos, local_center, local_center, center_shift_x,
+                                                     center_shift_y);
+            Position *position = new Position(max_plane_pos, moved_pos.first, moved_pos.second, max_val);
+            return position;
+        } else {
+            return nullptr;
+        }
     }
+    return nullptr;
 }
 
 
@@ -163,8 +170,8 @@ std::vector<std::vector<float>> ColumnResult::get_part_plane_twodim(int plane, i
         }
     } else {
         int center_shift = (w_size - 1)/2;
-        for(int i = x - center_shift; i < x + center_shift; i++) {
-            for (int j = y - center_shift; j < y + center_shift; j++) {
+        for(int i = x - center_shift; i <= (x + center_shift); i++) {
+            for (int j = y - center_shift; j <= (y + center_shift); j++) {
                 //catch exception
                 if(i >= 0 && i < plane_size && j >= 0 && j < plane_size)
                     res[i - x + center_shift][j - y + center_shift] = data[plane][i][j];
@@ -312,6 +319,11 @@ void ColumnResult::summ_data() {
 float ColumnResult::get_val(int plane_num) {
     return data[plane_num][0][0];
 }
+
+std::vector<std::vector<std::vector<float>>> ColumnResult::get_data() {
+    return data;
+}
+
 
 
 

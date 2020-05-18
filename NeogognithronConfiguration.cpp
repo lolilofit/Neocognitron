@@ -35,10 +35,10 @@ NeocognithronConfiguration::NeocognithronConfiguration() {
     r.reserve(layers_num);
     q.reserve(layers_num);
 
-    r[0] = 4;
+    r[0] = 2;
     r[1] = 1;
-    r[2] = 1;
-    r[3] = 1;
+    r[2] = 2;
+    r[3] = 2;
 
     q[0] = 10;
     q[1] = 10;

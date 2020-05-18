@@ -42,6 +42,8 @@ public:
     void train_in_loop(int loops);
 
     void train_again(int last_layers_num);
+
+    void test_network(std::vector<std::vector<int>> &result_labels);
 };
 
 

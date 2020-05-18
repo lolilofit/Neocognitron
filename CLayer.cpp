@@ -82,3 +82,7 @@ void CLayer::init_c_layer(int new_planes_num, int prev_plane_size) {
 
 }
 
+void CLayer::push_label(int labl) {
+    labels.push_back(labl);
+}
+

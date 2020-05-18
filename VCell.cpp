@@ -15,8 +15,10 @@ float VCell::calkOutput(std::vector<std::vector<float>> &input, std::vector<std:
         }
     }
 
-    if(res < 0)
+    if(res < 0) {
         std::cout << "";
+        return 0.0;
+    }
 
     return std::sqrt(res);
 }
