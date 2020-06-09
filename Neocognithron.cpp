@@ -54,6 +54,7 @@ Neocognithron::Neocognithron(std::vector<std::vector<float>> &train_set,
 }
 
 ColumnResult Neocognithron::one_train_iteration(int train_example) {
+    std::vector<int> result_labels;
 
     ColumnResult prevResult = ColumnResult(28, 1);
     ColumnResult columnResult = ColumnResult(28, 1);
@@ -63,7 +64,7 @@ ColumnResult Neocognithron::one_train_iteration(int train_example) {
 
     
     for (int train_layer = 0; train_layer < s_layers.size() - 1; train_layer++) {
-        for (train_example = 0; train_example < train_set.size(); train_example++) {
+        for (train_example = 0; train_example < test_set.size(); train_example++) {
             std::vector<std::vector<float>> example;
             example.resize(28);
             for (int i = 0; i < 28; i++) {
@@ -84,19 +85,24 @@ ColumnResult Neocognithron::one_train_iteration(int train_example) {
                    prevResult = c_layers[i]->calk_result(columnResult);
                }
 
-               if(i == train_layer && train_example == (train_set.size() - 1)) {
+               if(i == train_layer && train_example == test_set.size() - 1) {
                     c_layers[i]->init_c_layer(columnResult.get_planes_number(), columnResult.get_plane_size());
                }
 
                prev_layer_num = prevResult.get_planes_number();
                prev_layer_size = prevResult.get_plane_size();
-
+            }
+            std::cout << "Train layer " << train_layer << "; Train example  " << train_example << "; S-layers_number" << s_layers[train_layer]->get_planes_number() << "\n";
+            if(train_layer == s_layers.size() - 2) {
+                result_labels.push_back(train_labels[train_example]);
             }
         }
         std::cout << "\n\n---------NEW_LAYER------------\n\n";
     }
 
-    train_again(prev_layer_num);
+
+    //test_network(result_labels);
+    test_network1(result_labels);
     return prevResult;
 }
 
@@ -107,47 +113,29 @@ Neocognithron::~Neocognithron() {
 
 }
 
-void Neocognithron::train_again(int last_layers_num) {
-    /*
-    ColumnResult prevResult = ColumnResult(28, 1);
-    ColumnResult columnResult = ColumnResult(28, 1);
-
-    for (int train_example = 0; train_example < 2; train_example++) {
-        std::vector<std::vector<float>> example;
-        example.resize(28);
-        for (int i = 0; i < 28; i++) {
-            example[i].resize(28);
-            for (int j = 0; j < 28; j++)
-                example[i][j] = test_set[train_example][i * 28 + j];
-        }
-
-        prevResult = ColumnResult(28, 1);
-        prevResult.set_plane(0, example);
-
-        columnResult = s_layers[0]->calkAndTrainAgain(prevResult);
-
-    }
-
-    c_layers[0]->init_c_layer(columnResult.get_planes_number(), columnResult.get_plane_size());
-    prevResult = c_layers[0]->calk_result(columnResult);
-
-    //for(int loop = 0; loop < 4; loop++) {
-    for (int i = 1; i < s_layers.size(); i++) {
-        columnResult = s_layers[i]->calkAndTrainAgain(prevResult);
-        prevResult = c_layers[i]->calk_result(columnResult);
-    }
-    */
-
-    std::vector<std::vector<int>> result_labels;
-    result_labels.resize(last_layers_num);
+void Neocognithron::test_network(std::vector<int> &result_labels) {
+    std::cout<< "\n\nSTART TEST ON TRAIN SET\n\n" ;
 
     ColumnResult columnResult1 = ColumnResult(28, 1);
+    std::vector<float> r;
+    r.reserve(4);
+    r[0] = 2;
+    r[1] = 1;
+    r[2] = 2;
+    r[3] = 2;
+    for(int i = 0; i < 4; i++) {
+        s_layers[i]->set_r(r[i]);
+    }
+
     int max_pos = -1;
     float max_val = 0.0;
     float val;
+    int total_number = 0;
+    int good = 0;
+    int bad = 0;
 
-    //int train_example = 1;
-    for (int train_example = 0; train_example < 4; train_example++) {
+
+    for(int train_example = 0; train_example < train_set.size(); train_example++) {
         std::vector<std::vector<float>> example;
         example.resize(28);
         for (int i = 0; i < 28; i++) {
@@ -159,85 +147,15 @@ void Neocognithron::train_again(int last_layers_num) {
         ColumnResult prevResult1 = ColumnResult(28, 1);
         prevResult1.set_plane(0, example);
 
-        //int i =0;
-        for (int i = 0; i < s_layers.size() - 1; i++) {
-
-            columnResult1 = s_layers[i]->calkAndTrainAgain(prevResult1);
-        //    if(train_labels[train_example] == 1) {
-       //         std::cout << "S-layer result #" << i << "\n";
-        //        columnResult1.calkData();
-        //    }
-
-            prevResult1 = c_layers[i]->calk_result(columnResult1);
-         //   if(train_labels[train_example] == 1) {
-        //        std::cout << "C-layer result #" << i << "\n";
-        //        prevResult1.calkData();
-         //   }
-        }
-
-        //prevResult1.calkData();
-        // std::cout << "Label " << train_example << "\n";
-
-        for(int res = 0; res < prevResult1.get_planes_number(); res++) {
-            val = prevResult1.get_val(res);
-            if(val > max_val) {
-                max_val = val;
-                max_pos = res;
-            }
-        }
-
-        //std::cout << "\n" << max_pos << "\n";
-        if(max_pos == -1)
-            std::cout << "ZERO RESULT" << "\n";
-        else
-            result_labels[max_pos].push_back(train_labels[train_example]);
-        max_pos = -1;
-        max_val = 0.0;
-    }
-
-
-    for(int i = 0; i < result_labels.size(); i++) {
-        for(int j = 0; j < result_labels[i].size(); j++) {
-            std::cout << result_labels[i][j] << " ";
-        }
-        std::cout << "\n";
-    }
-
-    test_network(result_labels);
-}
-
-void Neocognithron::test_network(std::vector<std::vector<int>> &result_labels) {
-    ColumnResult columnResult1 = ColumnResult(28, 1);
-
-    int max_pos = -1;
-    float max_val = 0.0;
-    float val;
-    int total_number = 0;
-    int good = 0;
-    int bad = 0;
-
-
-    for(int train_example = 0; train_example < 10; train_example++) {
-        std::vector<std::vector<float>> example;
-        example.resize(28);
-        for (int i = 0; i < 28; i++) {
-            example[i].resize(28);
-            for (int j = 0; j < 28; j++)
-                example[i][j] = test_set[train_example][i * 28 + j];
-        }
-
-        ColumnResult prevResult1 = ColumnResult(28, 1);
-        prevResult1.set_plane(0, example);
-
         for (int i = 0; i < s_layers.size() - 1; i++) {
             columnResult1 = s_layers[i]->calkAndTrainAgain(prevResult1);
-            std::cout << "S-layer result #" << i << "\n";
+            //std::cout << "S-layer result #" << i << "\n";
            // columnResult1.calkData();
 
             prevResult1 = c_layers[i]->calk_result(columnResult1);
 
-            std::cout << "C-layer result #" << i << "\n";
-            prevResult1.calkData();
+            //std::cout << "C-layer result #" << i << "\n";
+            //prevResult1.calkData();
         }
 
         for(int res = 0; res < prevResult1.get_planes_number(); res++) {
@@ -253,11 +171,11 @@ void Neocognithron::test_network(std::vector<std::vector<int>> &result_labels) {
             //for (int j = 0; j < result_labels[max_pos].size(); j++) {
             //    std::cout << result_labels[max_pos][j] << " ";
            // }
-           if(test_labels[train_example] == result_labels[max_pos][0])
+           if(train_labels[train_example] == result_labels[max_pos])
                good++;
            else
                bad++;
-            std::cout << "\nCompare " << test_labels[train_example] << " and " << result_labels[max_pos][0];
+            std::cout << "\nCompare " << train_labels[train_example] << " and " << result_labels[max_pos];
         }
         total_number++;
         max_val = -1.0;
@@ -265,4 +183,115 @@ void Neocognithron::test_network(std::vector<std::vector<int>> &result_labels) {
     //    std::cout << "\nCompare " << test_labels[train_example] << " and " << result_labels[max_pos][0];
     }
     std::cout << "\n Total good examples = " << good << ";\nTotal bad = " << bad << "Total examples number = " << total_number;
+}
+
+
+void Neocognithron::test_network1(std::vector<int> &result_labels) {
+    std::cout<< "\n\nSTART TEST\n\n" ;
+
+    std::vector<int> true_positive;
+    true_positive.resize(10);
+    std::fill(true_positive.begin(), true_positive.begin()+10, 0);
+
+    std::vector<int> true_negative;
+    true_negative.resize(10);
+    std::fill(true_negative.begin(), true_negative.begin()+10, 0);
+
+    std::vector<int> false_positive;
+    false_positive.resize(10);
+    std::fill(false_positive.begin(), false_positive.begin()+10, 0);
+
+    std::vector<int> false_negative;
+    false_negative.resize(10);
+    std::fill(false_negative.begin(), false_negative.begin()+10, 0);
+
+    ColumnResult columnResult1 = ColumnResult(28, 1);
+    std::vector<float> r;
+    r.reserve(4);
+    r[0] = 2;
+    r[1] = 1;
+    r[2] = 2;
+    r[3] = 2;
+    for(int i = 0; i < 4; i++) {
+        s_layers[i]->set_r(r[i]);
+    }
+
+    int max_pos = -1;
+    float max_val = 0.0;
+    float val;
+    int total_number = 0;
+    int good = 0;
+    int bad = 0;
+
+
+    for(int train_example = 0; train_example < test_set.size(); train_example++) {
+        std::vector<std::vector<float>> example;
+        example.resize(28);
+        for (int i = 0; i < 28; i++) {
+            example[i].resize(28);
+            for (int j = 0; j < 28; j++)
+                example[i][j] = test_set[train_example][i * 28 + j];
+        }
+
+        ColumnResult prevResult1 = ColumnResult(28, 1);
+        prevResult1.set_plane(0, example);
+
+        for (int i = 0; i < s_layers.size() - 1; i++) {
+            columnResult1 = s_layers[i]->calkAndTrainAgain(prevResult1);
+            //std::cout << "S-layer result #" << i << "\n";
+            // columnResult1.calkData();
+
+            prevResult1 = c_layers[i]->calk_result(columnResult1);
+
+            //std::cout << "C-layer result #" << i << "\n";
+            //prevResult1.calkData();
+        }
+
+        for(int res = 0; res < prevResult1.get_planes_number(); res++) {
+            val = prevResult1.get_val(res);
+            if(val > max_val) {
+                max_val = val;
+                max_pos = res;
+            }
+        }
+        if(max_pos == -1)
+            std::cout << "oh, zero\n";
+        else {
+            //for (int j = 0; j < result_labels[max_pos].size(); j++) {
+            //    std::cout << result_labels[max_pos][j] << " ";
+            // }
+            if(test_labels[train_example] == result_labels[max_pos]) {
+                good++;
+                true_positive[test_labels[train_example]]++;
+                for(int p = 0; p < 10; p++)
+                    if(p != test_labels[train_example])
+                        true_negative[p]++;
+            }
+            else {
+                bad++;
+                false_negative[test_labels[train_example]]++;
+                false_positive[result_labels[max_pos]]++;
+                for(int p = 0 ; p < 10; p++)
+                    if(p != test_labels[train_example] && p != result_labels[max_pos])
+                        true_negative[test_labels[train_example]]++;
+            }
+            std::cout << "\nCompare " << test_labels[train_example] << " and " << result_labels[max_pos];
+        }
+        total_number++;
+        max_val = -1.0;
+        max_pos = -1;
+        //    std::cout << "\nCompare " << test_labels[train_example] << " and " << result_labels[max_pos][0];
+    }
+    std::cout << "\n Total good examples = " << good << ";\nTotal bad = " << bad << "Total examples number = " << total_number;
+
+    std::cout << "\nAcc percent" << (float)good/(float)total_number << "\n";
+
+    std::cout << "Metrics for every class\n";
+    for(int i = 0; i < 10; i ++) {
+        std::cout << "Class "  << i <<"\nPrecision = " << (float)true_positive[i]/((float)true_positive[i] + (float)false_positive[i])
+        << "; Recall = " << (float)true_positive[i]/((float)true_positive[i] + (float)false_negative[i])
+        << "; F1= " << (2.0 * (float)true_positive[i])/(2.0 * (float)true_positive[i] + (float)false_positive[i] + (float)false_negative[i]) << "\n";
+
+        std::cout << "Sp = " << ((float)true_negative[i])/((float)true_negative[i] + (float)false_positive[i]) << "; Se = " << ((float)true_positive[i])/((float)true_positive[i] + (float)false_positive[i]) << "\n";
+    }
 }

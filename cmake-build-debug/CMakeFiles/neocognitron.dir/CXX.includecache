@@ -6,65 +6,53 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/User/CLionProjects/neocognitron/CCell.h
+C:/Users/darya/CLionProjects/neocognithron/CCell.h
 vector
 -
 
-C:/Users/User/CLionProjects/neocognitron/CLayer.h
+C:/Users/darya/CLionProjects/neocognithron/CLayer.h
 ColumnResult.h
-C:/Users/User/CLionProjects/neocognitron/ColumnResult.h
+C:/Users/darya/CLionProjects/neocognithron/ColumnResult.h
 CCell.h
-C:/Users/User/CLionProjects/neocognitron/CCell.h
+C:/Users/darya/CLionProjects/neocognithron/CCell.h
 
-C:/Users/User/CLionProjects/neocognitron/ColumnResult.h
+C:/Users/darya/CLionProjects/neocognithron/ColumnResult.h
 vector
 -
 
-C:/Users/User/CLionProjects/neocognitron/DataOperations.h
+C:/Users/darya/CLionProjects/neocognithron/DataOperations.h
 vector
 -
 
-C:/Users/User/CLionProjects/neocognitron/Neocognithron.cpp
+C:/Users/darya/CLionProjects/neocognithron/NeogognithronConfiguration.cpp
 iostream
 -
-Neocognithron.h
-C:/Users/User/CLionProjects/neocognitron/Neocognithron.h
-
-C:/Users/User/CLionProjects/neocognitron/Neocognithron.h
-vector
--
-map
--
-SLayer.h
-C:/Users/User/CLionProjects/neocognitron/SLayer.h
-CLayer.h
-C:/Users/User/CLionProjects/neocognitron/CLayer.h
 NeogognithronConfiguration.h
-C:/Users/User/CLionProjects/neocognitron/NeogognithronConfiguration.h
+C:/Users/darya/CLionProjects/neocognithron/NeogognithronConfiguration.h
 
-C:/Users/User/CLionProjects/neocognitron/NeogognithronConfiguration.h
+C:/Users/darya/CLionProjects/neocognithron/NeogognithronConfiguration.h
 SLayer.h
-C:/Users/User/CLionProjects/neocognitron/SLayer.h
+C:/Users/darya/CLionProjects/neocognithron/SLayer.h
 CLayer.h
-C:/Users/User/CLionProjects/neocognitron/CLayer.h
+C:/Users/darya/CLionProjects/neocognithron/CLayer.h
 
-C:/Users/User/CLionProjects/neocognitron/SCell.h
+C:/Users/darya/CLionProjects/neocognithron/SCell.h
 vector
 -
 DataOperations.h
-C:/Users/User/CLionProjects/neocognitron/DataOperations.h
+C:/Users/darya/CLionProjects/neocognithron/DataOperations.h
 
-C:/Users/User/CLionProjects/neocognitron/SLayer.h
+C:/Users/darya/CLionProjects/neocognithron/SLayer.h
 vector
 -
 SCell.h
-C:/Users/User/CLionProjects/neocognitron/SCell.h
+C:/Users/darya/CLionProjects/neocognithron/SCell.h
 VCell.h
-C:/Users/User/CLionProjects/neocognitron/VCell.h
+C:/Users/darya/CLionProjects/neocognithron/VCell.h
 ColumnResult.h
-C:/Users/User/CLionProjects/neocognitron/ColumnResult.h
+C:/Users/darya/CLionProjects/neocognithron/ColumnResult.h
 
-C:/Users/User/CLionProjects/neocognitron/VCell.h
+C:/Users/darya/CLionProjects/neocognithron/VCell.h
 vector
 -
 math.h

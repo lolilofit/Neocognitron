@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include "NeogognithronConfiguration.h"
-
 int NeocognithronConfiguration::get_planes_number(int layer_number, bool s_flag) {
     if(s_flag)
         return s_num_pl[layer_number];
@@ -35,70 +34,18 @@ NeocognithronConfiguration::NeocognithronConfiguration() {
     r.reserve(layers_num);
     q.reserve(layers_num);
 
-    r[0] = 2;
-    r[1] = 1;
-    r[2] = 2;
-    r[3] = 2;
+    r[0] = 1.8;
+    r[1] = 1.8;
+    r[2] = 1.8;
+    r[3] = 2.0;
 
     q[0] = 10;
-    q[1] = 10;
-    q[2] = 10;
-    q[3] = 10;
+    q[1] = 55;
+    q[2] = 90;
+    q[3] = 100;
 
     c.resize(layers_num);
-
-    /*
-    std::vector<float> g_cof = {0.11, 0.42, 0.06, 0.8};
-
-    //??? reserve??
-    std::vector<float> f = decr_f(g_cof[0], s_w_size[0]);
-    decr_f_norm(f, 1);
-    c[0] = f;
-
-    for(int i = 1; i < layers_num; i++) {
-        f = decr_f(g_cof[i], s_w_size[i]);
-        decr_f_norm(f, c_num_pl[i - 1]);
-        c[i] = f;
-    }
-    */
-
-    /*
-    std::vector<float> d_cof = {0.49, 0.87, 0.52, 0.45};
-    std::vector<float> d_cof_add = {0.39, 0.68, 0.39, 0.68};
-
-
-    d.resize(layers_num);
-
-    for(int i = 0; i < layers_num; i++) {
-        d[i] = decr_f(d_cof[i], c_w_size[i]);
-        for(int j = 0; j < d[i].size(); j++) {
-            d[i][j] = d[i][j] * d_cof_add[i];
-        }
-    }
-*/
     a.resize(layers_num);
-    //init_a();
-    /*
-    int planes_number;
-    int planes_num_prev
-
-    for(int layer = 0; layer < layers_num; layer++) {
-        planes_number = s_num_pl[layer];
-
-        a.resize(planes_number);
-        for(int i = 0; i < planes_number; i++) {
-            a[i].resize(planes_num_prev);
-            for(int j = 0; j < planes_num_prev; j++) {
-                a[i][j].resize(w_size*w_size);
-                for(int k = 0; k < w_size*w_size; k++) {
-                    float generated_value = (((float)std::rand())/(RAND_MAX) * (0.4f));
-                    a[i][j][k] = generated_value;
-                }
-            }
-        }
-
-    }
-     */
 }
 
 std::vector<float> NeocognithronConfiguration::get_c_weights(int layer_number) {

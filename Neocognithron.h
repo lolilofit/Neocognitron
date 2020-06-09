@@ -43,7 +43,8 @@ public:
 
     void train_again(int last_layers_num);
 
-    void test_network(std::vector<std::vector<int>> &result_labels);
+    void test_network(std::vector<int> &result_labels);
+    void test_network1(std::vector<int> &result_labels);
 };
 
 
