@@ -29,7 +29,6 @@ std::vector<float> ColumnResult::get_part_plane(int plane, int x, int y, int w_s
             for(int j = y - center_shift; j <= (y + center_shift); j++) {
                 //catch exception
                 if(i >= 0 && i < plane_size && j >= 0 && j < plane_size)
-                    //res[i*w_size + j] = data[plane][i][j];
                     res[cnt] = data[plane][i][j];
                 else {
                     res[cnt] = 0.0;
@@ -43,14 +42,11 @@ std::vector<float> ColumnResult::get_part_plane(int plane, int x, int y, int w_s
 }
 
 void ColumnResult::get_planes_parts(int x, int y, int w_size, std::vector<std::vector<float>> &res) {
-    //std::vector<std::vector<float>> res;
     res.resize(plane_number);
 
     for(int plane = 0; plane < plane_number; plane++) {
         res[plane] = get_part_plane(plane, x, y, w_size);
     }
-
-    //return res;
 }
 
 void ColumnResult::add_result(int plane_number, int x, int y, float res) {
@@ -251,8 +247,6 @@ void ColumnResult::calkData() {
         for(int j = 0; j < i_data.size(); j++) {
             std::vector<float> ij_data = i_data[j];
             for(int k = 0; k < ij_data.size(); k++) {
-
-                //std::cout <<ij_data[k] << " ";
                 if(ij_data[k] > 0.0f)
                     std::cout<<1;
                 else
@@ -323,7 +317,3 @@ float ColumnResult::get_val(int plane_num) {
 std::vector<std::vector<std::vector<float>>> ColumnResult::get_data() {
     return data;
 }
-
-
-
-
