@@ -1,3 +1,0 @@
-C:/Users/darya/CLionProjects/neocognithron/cmake-build-debug/CMakeFiles/neocognitron.dir
-C:/Users/darya/CLionProjects/neocognithron/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/darya/CLionProjects/neocognithron/cmake-build-debug/CMakeFiles/rebuild_cache.dir
