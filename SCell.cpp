@@ -6,7 +6,6 @@
 
 SCell::SCell(float layer_r, float b) {
     this->r = layer_r;
-  //  this->b = b;
 }
 
 float SCell::calkOutput(std::vector<std::vector<float>> &input, std::vector<std::vector<float>> &a, float v_ing, float b_coef) {
