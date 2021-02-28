@@ -18,24 +18,10 @@ float DataOperations::scalar_multiply(std::vector<float> &first, std::vector<flo
 }
 
 int DataOperations::init_d(std::vector<std::vector<float>> &d, int layers_num, int w_size) {
-
-//    std::vector<float> d_cof = {0.49, 0.87, 0.52, 0.45};
- //   std::vector<float> d_cof_add = {0.39, 0.68, 0.39, 0.68};
-
     d.resize(layers_num);
 
     for(int i = 0; i < layers_num; i++) {
         d[i] = decr_f(w_size);
-        /*
-        for(int l = 0; l < w_size; l++) {
-            for(int m = 0; m < w_size; m++) {
-                std::cout << d[i][l*w_size + m] << " ";
-            }
-            std::cout << "\n";
-        }
-        std::cout << "\n";
-        */
-
         for(int j = 0; j < d[i].size(); j++) {
             d[i][j] = d[i][j] * 0.39;
         }
@@ -45,18 +31,6 @@ int DataOperations::init_d(std::vector<std::vector<float>> &d, int layers_num, i
 std::vector<float> DataOperations::decr_f(int size) {
     std::vector<float> res;
     res.resize(size*size);
-/*
-    for(int x = 0; x < size; x++) {
-        for(int y = 0; y < size; y++) {
-            res[x*size + y] = 10000.0f*(1.0f/3.14)*(1.0f - (0.5)*(x*x + y*y))*(float)std::exp(-0.5 * (x*x + y*y));
-            std::cout << res[x*size + y] << " ";
-        }
-        std::cout << "\n";
-    }
-
-    std::cout << "\n-----------------\n\n";
-    */
-
     res[1] = 1.0;
 
     float half_x = ((float)size - 1.0f)/2.0f;
