@@ -32,7 +32,6 @@ public:
     Neocognithron();
     ~Neocognithron();
 
-    //Neocognithron(std::vector<std::vector<std::vector<int>>> &train_set, std::vector<std::vector<std::vector<int>> &test_set);
     Neocognithron(std::vector<std::vector<float>> &train_set,
             std::vector<std::vector<float>> &test_set,
             std::vector<int> &train_labels,
