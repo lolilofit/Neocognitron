@@ -35,27 +35,12 @@ ColumnResult CLayer::calk_result(ColumnResult previous_column_result) {
 
     return columnResult;
 }
-/*
-CLayer::CLayer(NeocognithronConfiguration configuration, int layer_num) {
-    this->w_size = configuration.get_w_size(layer_num);
-    this->planes_number = configuration.get_planes_number(layer_num);
-    this->plane_size = configuration.get_plane_size(layer_num);
-
-    init_c_layer();
-}
- */
 
 CLayer::CLayer(int planes_number, int plane_size, int w_size, std::vector<std::vector<float>> &d_init, std::vector<float> &cof_corr) {
     this->planes_number = planes_number;
     this->plane_size = plane_size;
     this->w_size = w_size;
-
-    //init_c_layer();
-
 }
-
-
-
 
 void CLayer::init_c_layer(int new_planes_num, int prev_plane_size) {
     planes_number = new_planes_num;
@@ -66,7 +51,6 @@ void CLayer::init_c_layer(int new_planes_num, int prev_plane_size) {
 
     d.resize(planes_number);
 
-    //for(int i = 0; i < planes_number; i++)
     DataOperations::init_d(this->d, planes_number, w_size);
 
     c_cells.resize(planes_number);
@@ -85,4 +69,3 @@ void CLayer::init_c_layer(int new_planes_num, int prev_plane_size) {
 void CLayer::push_label(int labl) {
     labels.push_back(labl);
 }
-
