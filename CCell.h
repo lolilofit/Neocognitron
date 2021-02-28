@@ -8,10 +8,8 @@
 #include <vector>
 
 class CCell {
-    //std::vector<float> cof_corr;
 public:
     CCell();
-    //float calk_result(std::vector<std::vector<float>> &planes_part, std::vector<std::vector<float>> &d);
     float calk_result(std::vector<float> &planes_part, std::vector<float> &d);
 };
 
