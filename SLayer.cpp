@@ -204,9 +204,6 @@ SLayer::SLayer(int planes_number, float q,
     this->col_size = col_size;
 
     this->r = r;
-
-    //this->initial_c = c;
-
 }
 
 void SLayer::init_layer(int planes_num_prev, int prev_area_size) {
@@ -223,9 +220,7 @@ void SLayer::init_layer(int planes_num_prev, int prev_area_size) {
         c[i] = f;
     }
 
-
     //set prev_planes_number in runtime
-    //this->a = a;
     (this->a).resize(planes_num_prev);
     for(int i = 0; i < planes_num_prev; i++) {
         std::vector<std::vector<float>> filler;
@@ -288,7 +283,6 @@ void SLayer::add_new_plane(ColumnResult &prev_col_result, ColumnResult &columnRe
 }
 
 void SLayer::get_res_per_plane(int plane_number, std::vector<Position*> &res, std::vector<Position*> &res_per_plane) {
-    //std::vector<Position*> res_per_plane;
     res_per_plane.resize(plane_number);
 
     Position* pos;
@@ -320,5 +314,3 @@ int SLayer::get_planes_number() {
 void SLayer::set_r(float r) {
     this->r = r;
 }
-
-
