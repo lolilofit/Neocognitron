@@ -27,18 +27,6 @@ int main() {
             }
         }
     }
-/*
-        for (int i = 0; i < 28; i++) {
-            for (int j = 0; j < 28; j++) {
-                if (ar[2][i * 28 + j] != 0)
-                    std::cout << 1;
-                else
-                    std::cout << 0;
-            }
-            std::cout << '\n';
-        }
-    std::cout << "\n\n";
-*/
 
     std::vector<std::vector<float>> train_set;
     imageProcess.readImage(60000, 784, train_set, "C:\\Users\\darya\\CLionProjects\\neocognithron\\mnist_data\\train-images.idx3-ubyte");
