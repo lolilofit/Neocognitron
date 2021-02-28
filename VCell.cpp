@@ -24,5 +24,4 @@ float VCell::calkOutput(std::vector<std::vector<float>> &input, std::vector<std:
 }
 
 VCell::VCell(std::vector<float> &initialWeights) {
-   // this->c = initialWeights;
 }
